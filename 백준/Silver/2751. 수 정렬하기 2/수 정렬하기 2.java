@@ -6,7 +6,7 @@ class ArrayList {
     int lastIndex = 0;
 
     public ArrayList() {
-        list = new int[2]; // 초기 사이즈
+        list = new int[2];
     }
 
     public ArrayList(int size) {
