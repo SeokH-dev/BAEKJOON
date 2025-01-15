@@ -2,30 +2,25 @@ import java.io.*;
 
 class MyStack {
     String[] stack;
-    int lastData = 0;
-
-    public MyStack() {
-        stack = new String[10]; // 기본 사이즈
-    }
+    int lastIndex = 0;
 
     public MyStack(int size) {
         stack = new String[size];
     }
 
-    public void push(String data) {
-        stack[lastData++] = data;
+    public void push(String item) {
+        stack[lastIndex++] = item;
     }
 
     public String pop() {
-        if (lastData != 0) {
-            return stack[--lastData];
-        } else {
+        if (lastIndex == 0) {
             return null;
         }
+        return stack[--lastIndex];
     }
 
-    public int isEmpty() {
-        return lastData == 0 ? 1 : 0;
+    public int size() {
+        return lastIndex;
     }
 }
 
@@ -38,30 +33,27 @@ public class Main {
         for (int i = 0; i < repeat; i++) {
             String[] input = br.readLine().split("");
             MyStack stack = new MyStack(input.length);
-            boolean isValid = true;
+            String temp = "";
 
-            for (String s : input) {
-                if (s.equals("(")) {
-                    stack.push(s);
-                } else if (s.equals(")")) {
-                    if (stack.isEmpty() == 1) {
-                        isValid = false;
-                        break;
-                    } else {
-                        stack.pop();
-                    }
+            for (int j = 0; j < input.length; j++) {
+                if (input[j].equals("(")) {
+                    stack.push(input[j]);
+                } else {
+                    temp = stack.pop();
+                }
+
+                if (temp == null) {
+                    break;
                 }
             }
 
-            if (isValid && stack.isEmpty() == 1) {
+            if (temp != null && stack.size() == 0) {
                 bw.write("YES\n");
             } else {
                 bw.write("NO\n");
             }
         }
-
         bw.flush();
         bw.close();
-        br.close();
     }
 }
